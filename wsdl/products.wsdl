@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ProductService" 
+  xmlns:tns="http://www.sample.com/ProductService/" targetNamespace="http://www.sample.com/ProductService/">
+  <wsdl:documentation>
+    Definition for a sample product service.
+  </wsdl:documentation>
+
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.sample.com/ProductService/">
+
+      <xsd:element name="GetProductsRequest">
+        <xsd:complexType>
+          <!-- Add filters -->
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetProductsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id">
+              <xsd:annotation>
+                The product guid.
+              </xsd:annotation>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="32"/>
+                <xsd:minLength value="32"/>
+              </xsd:restriction>
+            </xsd:element>
+            <xsd:element name="name">
+              <xsd:annotation>
+                The product name.
+              </xsd:annotation>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="64"/>
+              </xsd:restriction>
+            </xsd:element>
+            <xsd:element name="thumbnailUrl">
+              <xsd:annotation>
+                The product thumbnail URL.
+              </xsd:annotation>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="128"/>
+              </xsd:restriction>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="GetProductDetailsRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id">
+              <xsd:annotation>
+                The product guid.
+              </xsd:annotation>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="32"/>
+                <xsd:minLength value="32"/>
+              </xsd:restriction>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetProductDetailsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id">
+              <xsd:annotation>
+                The product guid.
+              </xsd:annotation>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="32"/>
+                <xsd:minLength value="32"/>
+              </xsd:restriction>
+            </xsd:element>
+            <xsd:element name="name">
+              <xsd:annotation>
+                The product name.
+              </xsd:annotation>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="64"/>
+              </xsd:restriction>
+            </xsd:element>
+            <xsd:element name="description">
+              <xsd:annotation>
+                The product description.
+              </xsd:annotation>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="256"/>
+              </xsd:restriction>
+            </xsd:element>
+            <xsd:element name="price" type="xsd:decimal">
+              <xsd:annotation>
+                The product price.
+              </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="thumbnailUrl">
+              <xsd:annotation>
+                The product thumbnail URL.
+              </xsd:annotation>
+              <xsd:restriction base="xsd:string">
+                <xsd:maxLength value="128"/>
+              </xsd:restriction>
+            </xsd:element>
+            <xsd:element name="productImageUrls" minOccurs="0" maxOccurs="50">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="productImageUrl">
+                    <xsd:annotation>
+                      The product image URLs.
+                    </xsd:annotation>
+                    <xsd:restriction base="xsd:string">
+                      <xsd:maxLength value="128"/>
+                    </xsd:restriction>
+                  </xsd:element>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+    </xsd:schema>
+  </wsdl:types>
+
+  <wsdl:message name="GetProductsRequest">
+    <wsdl:part element="tns:GetProductsRequest" name="GetProductsRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetProductsResponse">
+    <wsdl:part element="tns:GetProductsResponse" name="GetProductsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProductDetailsRequest">
+    <wsdl:part element="tns:GetProductDetailsRequest" name="GetProductDetailsRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetProductDetailsResponse">
+    <wsdl:part element="tns:GetProductDetailsResponse" name="GetProductDetailsResponse" />
+  </wsdl:message>
+
+  <wsdl:portType name="ProductsPortType">
+    <wsdl:operation name="GetProducts">
+      <wsdl:input message="tns:GetProductsRequest" />
+      <wsdl:output message="tns:GetProductsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductDetails">
+      <wsdl:input message="tns:GetProductDetailsRequest" />
+      <wsdl:output message="tns:GetProductDetailsResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <wsdl:binding name="ProductsSoapHttpBinding" type="tns:ProductsPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetProducts">
+      <soap:operation soapAction="http://www.sample.com/ProductService/GetProducts" />
+      <wsdl:input>
+        <soap:body parts="GetProductsRequest" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="GetProductsResponse" use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductDetails">
+      <soap:operation soapAction="http://www.sample.com/ProductService/GetProductDetails" />
+      <wsdl:input>
+        <soap:body parts="GetProductDetailsRequest" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="GetProductDetailsResponse" use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+
+  <wsdl:service name="ProductService">
+    <wsdl:port name="ProductsSoapHttpPort" binding="tns:ProductsSoapHttpBinding">
+      <soap:address location="https://www.sample.com/ProductService/" />
+      </wsdl:port>
+    </wsdl:service>
+  </wsdl:definitions>
